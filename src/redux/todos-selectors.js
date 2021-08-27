@@ -6,6 +6,12 @@ export const getError = state => state.error;
 
 export const getTodos = state => state.todos;
 
+export const getTodoId = id =>
+  createSelector([getTodos], allTodos => {
+    const todo = allTodos.find(todo => todo.id === id);
+    return todo.id;
+  });
+
 export const getFilter = state => state.filter;
 
 export const getVisibleTodos = createSelector(

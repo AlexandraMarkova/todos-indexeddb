@@ -5,11 +5,7 @@ import { useDispatch } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
 
-import {
-  // getItems,
-  addPosts,
-  // deletePosts
-} from '../../redux/todos-operations';
+import { addPosts } from '../../redux/todos-operations';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -20,11 +16,10 @@ const useStyles = makeStyles(theme => ({
     width: 300,
   },
   root: {
-    margin: theme.spacing(1),
-    width: '25ch',
-  },
-  btn: {
-    margin: theme.spacing(3),
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '27ch',
+    },
   },
 }));
 
@@ -78,12 +73,7 @@ export default function TodoForm({ onSave }) {
           value={postContent}
           onChange={contentChange}
         />
-        <Button
-          variant="contained"
-          color="primary"
-          type="submit"
-          className={classes.btn}
-        >
+        <Button variant="contained" color="primary" type="submit">
           Save todo
         </Button>
       </form>

@@ -84,7 +84,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PrimaryAppBar = () => {
-  const { handleOpen } = useContext(Context);
+  const { handleOpen, togleOpenDeleteModal, id } = useContext(Context);
   const dispatch = useDispatch();
   const value = useSelector(getFilter);
 
@@ -150,18 +150,23 @@ const PrimaryAppBar = () => {
         </IconButton>
         <p>Add</p>
       </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="delete" color="inherit">
-          <DeleteForeverIcon />
-        </IconButton>
-        <p>Delete</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton aria-label="adit" color="inherit">
-          <EditIcon />
-        </IconButton>
-        <p>Edit</p>
-      </MenuItem>
+      {id ? (
+        <>
+          {' '}
+          <MenuItem>
+            <IconButton aria-label="delete" color="inherit">
+              <DeleteForeverIcon />
+            </IconButton>
+            <p>Delete</p>
+          </MenuItem>
+          <MenuItem onClick={handleProfileMenuOpen}>
+            <IconButton aria-label="adit" color="inherit">
+              <EditIcon />
+            </IconButton>
+            <p>Edit</p>
+          </MenuItem>
+        </>
+      ) : null}
     </Menu>
   );
 
@@ -194,12 +199,21 @@ const PrimaryAppBar = () => {
             <IconButton onClick={handleOpen} aria-label="add" color="inherit">
               <AddIcon />
             </IconButton>
-            <IconButton aria-label="delete" color="inherit">
-              <DeleteForeverIcon />
-            </IconButton>
-            <IconButton aria-label="adit" color="inherit">
-              <EditIcon />
-            </IconButton>
+            {id && (
+              <>
+                {' '}
+                <IconButton
+                  onClick={togleOpenDeleteModal}
+                  aria-label="delete"
+                  color="inherit"
+                >
+                  <DeleteForeverIcon />
+                </IconButton>
+                <IconButton aria-label="adit" color="inherit">
+                  <EditIcon />
+                </IconButton>
+              </>
+            )}
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
@@ -214,6 +228,7 @@ const PrimaryAppBar = () => {
           </div>
         </Toolbar>
       </AppBar>
+
       {renderMobileMenu}
       {renderMenu}
     </div>

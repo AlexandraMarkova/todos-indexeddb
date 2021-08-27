@@ -1,4 +1,5 @@
 import { db } from '../db';
+import { format } from 'date-fns';
 import {
   fetchTodosRequest,
   fetchTodosSuccess,
@@ -12,7 +13,6 @@ import {
   editTodoRequest,
   editTodoSuccess,
   editTodoError,
-  //   changeFilter,
 } from './todos-actions';
 
 export const getItems = () => async dispatch => {
@@ -32,7 +32,7 @@ export const addPosts = (postTitle, postContent) => async dispatch => {
     id: postTitle,
     title: postTitle,
     content: postContent,
-    time: new Date().toString(),
+    time: format(new Date(), 'MM/dd/yyyy/hh:mm:ss'),
   };
   dispatch(addTodoRequest());
   await db.posts.add(todo);
