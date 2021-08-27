@@ -32,7 +32,7 @@ export const addPosts = (postTitle, postContent) => async dispatch => {
     id: postTitle,
     title: postTitle,
     content: postContent,
-    time: new Date(),
+    time: new Date().toString(),
   };
   dispatch(addTodoRequest());
   await db.posts.add(todo);
