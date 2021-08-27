@@ -1,7 +1,7 @@
 import React from 'react';
-// import Main from './components/Main';
+import Main from './components/Main/Main';
 
-function App() {
+export default function App() {
   return (
     <div className="App">
       <header>
@@ -9,9 +9,9 @@ function App() {
           <h1>Welcome to your To Do list</h1>
         </div>
       </header>
-      <main>{/* <Main /> */}</main>
+      <main>
+        <Main />
+      </main>
     </div>
   );
 }
-
-export default App;
