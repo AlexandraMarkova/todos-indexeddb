@@ -18,9 +18,10 @@ export default function App() {
     <Context.Provider value={{ open, handleOpen, handleClose }}>
       <div className="App">
         <header>
-          <div>
-            <PrimaryAppBar />
-          </div>
+          {/* <div> */}
+          <PrimaryAppBar />
+
+          {/* </div> */}
         </header>
         <main>
           <SideBar />

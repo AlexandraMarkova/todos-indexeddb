@@ -16,13 +16,10 @@ import Context from '../../AppContext';
 import { useContext } from 'react';
 
 import TodoForm from '../TodoForm/TodoForm';
-// import TodoList from './components/TodoList/TodoList'
+import Workspace from '../Workspace/Workspace';
 
 import { Dialog } from '@material-ui/core';
-import {
-  // getTodos,
-  getVisibleTodos,
-} from '../../redux/todos-selectors';
+import { getVisibleTodos } from '../../redux/todos-selectors';
 import { getItems } from '../../redux/todos-operations';
 
 const useStyles = makeStyles(theme => ({
@@ -42,9 +39,9 @@ const useStyles = makeStyles(theme => ({
     top: 0,
     bottom: 'auto',
   },
-  grow: {
-    flexGrow: 1,
-  },
+  // grow: {
+  //   flexGrow: 1,
+  // },
   fabButton: {
     position: 'absolute',
     zIndex: 1,
@@ -52,6 +49,16 @@ const useStyles = makeStyles(theme => ({
     left: 0,
     right: 0,
     margin: '0 auto',
+  },
+  flexBar: {
+    display: 'flex',
+  },
+  leftTodosBar: {
+    flexBasis: '30%',
+  },
+  workspace: {
+    flexBasis: '70%',
+    padding: theme.spacing(2, 2, 0),
   },
 }));
 
@@ -69,24 +76,26 @@ export default function SideBar() {
     console.log('TodoList re-render') || (
       <React.Fragment>
         <CssBaseline />
-        <Container maxWidth="sm">
-          <Dialog
-            className={classes.modal}
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="simple-modal-title"
-            aria-describedby="simple-modal-description"
-          >
-            <TodoForm onSave={handleClose} />
-          </Dialog>
-          <div className={classes.grow} />
-
-          <Paper square className={classes.paper}>
-            <List className={classes.list}>
-              {posts.map(({ id, title, content, time }) => (
-                <React.Fragment key={id}>
-                  <ListItem>
-                    {/* <Card className={classes.root}>
+        <Container maxWidth="xl">
+          <div className={classes.flexBar}>
+            <div className={classes.leftTodosBar}>
+              <Dialog
+                className={classes.modal}
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+              >
+                <TodoForm onSave={handleClose} />
+              </Dialog>
+              <div className={classes.grow} />
+              {posts.length > 0 ? (
+                <Paper square className={classes.paper}>
+                  <List className={classes.list}>
+                    {posts.map(({ id, title, content, time }) => (
+                      <React.Fragment key={id}>
+                        <ListItem button>
+                          {/* <Card className={classes.root}>
                     <CardContent>
                       <Typography
                         className={classes.title}
@@ -103,22 +112,28 @@ export default function SideBar() {
                       </Typography>
                     </CardContent>
                   </Card> */}
-                    {/* <ListItemText primary={title} secondary={content} /> */}
+                          {/* <ListItemText primary={title} secondary={content} /> */}
 
-                    <ListItemText
-                      primary={title}
-                      secondary={
-                        <div>
-                          <p> {content}</p>
-                          <p> {time}</p>
-                        </div>
-                      }
-                    />
-                  </ListItem>
-                </React.Fragment>
-              ))}
-            </List>
-          </Paper>
+                          <ListItemText
+                            primary={title}
+                            secondary={
+                              <div>
+                                <p> {content}</p>
+                                <p> {time}</p>
+                              </div>
+                            }
+                          />
+                        </ListItem>
+                      </React.Fragment>
+                    ))}
+                  </List>
+                </Paper>
+              ) : null}
+            </div>
+            <div className={classes.workspace}>
+              <Workspace />
+            </div>
+          </div>
         </Container>
       </React.Fragment>
     )
