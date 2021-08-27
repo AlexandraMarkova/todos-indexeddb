@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useContext, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -11,10 +13,11 @@ import SearchIcon from '@material-ui/icons/Search';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
-
 import AddIcon from '@material-ui/icons/Add';
+
 import Context from '../../AppContext';
-import { useContext } from 'react';
+import { getFilter } from '../../redux/todos-selectors';
+import { changeFilter } from '../../redux/todos-actions';
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -82,6 +85,8 @@ const useStyles = makeStyles(theme => ({
 
 const PrimaryAppBar = () => {
   const { handleOpen } = useContext(Context);
+  const dispatch = useDispatch();
+  const value = useSelector(getFilter);
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -89,6 +94,11 @@ const PrimaryAppBar = () => {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const onChange = useCallback(
+    e => dispatch(changeFilter(e.target.value)),
+    [dispatch],
+  );
 
   const handleProfileMenuOpen = event => {
     setAnchorEl(event.currentTarget);
@@ -162,6 +172,7 @@ const PrimaryAppBar = () => {
           <Typography className={classes.title} variant="h6" noWrap>
             ToDo-UI
           </Typography>
+
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -173,8 +184,11 @@ const PrimaryAppBar = () => {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              value={value}
+              onChange={onChange}
             />
           </div>
+
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton onClick={handleOpen} aria-label="add" color="inherit">

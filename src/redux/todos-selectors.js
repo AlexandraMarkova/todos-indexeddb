@@ -14,7 +14,7 @@ export const getVisibleTodos = createSelector(
     const normalizeFilter = filter.toLowerCase();
 
     return todos.filter(todo =>
-      todo.name.toLowerCase().includes(normalizeFilter),
+      todo.title.toLowerCase().includes(normalizeFilter),
     );
   },
 );

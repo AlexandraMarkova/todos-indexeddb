@@ -19,7 +19,10 @@ import TodoForm from '../TodoForm/TodoForm';
 // import TodoList from './components/TodoList/TodoList'
 
 import { Dialog } from '@material-ui/core';
-import { getTodos } from '../../redux/todos-selectors';
+import {
+  // getTodos,
+  getVisibleTodos,
+} from '../../redux/todos-selectors';
 import { getItems } from '../../redux/todos-operations';
 
 const useStyles = makeStyles(theme => ({
@@ -56,33 +59,34 @@ export default function SideBar() {
   const { open, handleClose } = useContext(Context);
   const dispatch = useDispatch();
   const classes = useStyles();
-  const posts = useSelector(getTodos);
+  const posts = useSelector(getVisibleTodos);
 
   useEffect(() => {
     dispatch(getItems());
   }, [dispatch]);
 
   return (
-    <React.Fragment>
-      <CssBaseline />
-      <Container maxWidth="sm">
-        <Dialog
-          className={classes.modal}
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-        >
-          <TodoForm onSave={handleClose} />
-        </Dialog>
-        <div className={classes.grow} />
+    console.log('TodoList re-render') || (
+      <React.Fragment>
+        <CssBaseline />
+        <Container maxWidth="sm">
+          <Dialog
+            className={classes.modal}
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+          >
+            <TodoForm onSave={handleClose} />
+          </Dialog>
+          <div className={classes.grow} />
 
-        <Paper square className={classes.paper}>
-          <List className={classes.list}>
-            {posts.map(({ id, title, content, time }) => (
-              <React.Fragment key={id}>
-                <ListItem>
-                  {/* <Card className={classes.root}>
+          <Paper square className={classes.paper}>
+            <List className={classes.list}>
+              {posts.map(({ id, title, content, time }) => (
+                <React.Fragment key={id}>
+                  <ListItem>
+                    {/* <Card className={classes.root}>
                     <CardContent>
                       <Typography
                         className={classes.title}
@@ -99,24 +103,25 @@ export default function SideBar() {
                       </Typography>
                     </CardContent>
                   </Card> */}
-                  {/* <ListItemText primary={title} secondary={content} /> */}
+                    {/* <ListItemText primary={title} secondary={content} /> */}
 
-                  <ListItemText
-                    primary={title}
-                    secondary={
-                      <div>
-                        <p> {content}</p>
-                        <p> {time}</p>
-                      </div>
-                    }
-                  />
-                </ListItem>
-              </React.Fragment>
-            ))}
-          </List>
-        </Paper>
-      </Container>
-    </React.Fragment>
+                    <ListItemText
+                      primary={title}
+                      secondary={
+                        <div>
+                          <p> {content}</p>
+                          <p> {time}</p>
+                        </div>
+                      }
+                    />
+                  </ListItem>
+                </React.Fragment>
+              ))}
+            </List>
+          </Paper>
+        </Container>
+      </React.Fragment>
+    )
   );
 }
 

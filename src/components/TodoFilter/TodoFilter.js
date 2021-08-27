@@ -1,7 +1,7 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { todosSelectors } from '../../redux/todos-selectors';
-import { changeFilter } from '../../redux/todos-selectors';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { todosSelectors } from '../../redux/todos-selectors';
+// import { changeFilter } from '../../redux/todos-selectors';
 
 export default function TodoFilter() {
   //   const dispatch = useDispatch();
