@@ -32,7 +32,6 @@ export default function App() {
   const getActiveTodo = (title, content) => {
     setTitle(title);
     setContent(content);
-    // setPostTime(time);
   };
 
   const deletePost = id => {
@@ -88,7 +87,6 @@ export default function App() {
           <SideBar />
         </main>
         <Dialog
-          // className={classes.modal}
           open={openDeleteModal}
           onClose={togleOpenDeleteModal}
           aria-labelledby="simple-modal-title"

@@ -68,7 +68,6 @@ const TodoEditor = () => {
         <Input
           className={classes.input}
           inputProps={{ 'aria-label': 'description' }}
-          //   defaultValue={postTitle}
           name="title"
           value={title}
           onChange={updateTitle}
@@ -79,7 +78,6 @@ const TodoEditor = () => {
           id="outlined-multiline-static"
           multiline
           rows={4}
-          //   defaultValue={postContent}
           variant="outlined"
           name="content"
           value={content}
