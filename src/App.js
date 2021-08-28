@@ -7,6 +7,8 @@ import { useDispatch } from 'react-redux';
 import { deletePosts } from './redux/todos-operations';
 import { Dialog } from '@material-ui/core';
 import { Button } from '@material-ui/core';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogActions from '@material-ui/core/DialogActions';
 
 export default function App() {
   const [open, setOpen] = React.useState(false);
@@ -15,16 +17,22 @@ export default function App() {
   const [postContent, setContent] = useState('');
   const [postTime, setPostTime] = useState('');
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [openEditor, setOpenEditor] = useState(false);
 
   const dispatch = useDispatch();
 
   const saveId = id => {
     setId(id);
   };
-  const getActiveTodo = (title, content, time) => {
+
+  const toggleEditorOpen = () => {
+    setOpenEditor(!openEditor);
+  };
+
+  const getActiveTodo = (title, content) => {
     setTitle(title);
     setContent(content);
-    setPostTime(time);
+    // setPostTime(time);
   };
 
   const deletePost = id => {
@@ -45,11 +53,12 @@ export default function App() {
   };
 
   const handleDelete = id => {
-    dispatch(deletePosts(id));
+    deletePost(id);
 
     setTitle('');
     setContent('');
     setPostTime('');
+    saveId(null);
     togleOpenDeleteModal();
   };
 
@@ -67,6 +76,8 @@ export default function App() {
         deletePost,
         getActiveTodo,
         togleOpenDeleteModal,
+        toggleEditorOpen,
+        openEditor,
       }}
     >
       <div className="App">
@@ -83,23 +94,27 @@ export default function App() {
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
         >
-          <p> You really want delete this ToDo?</p>
-          <Button
-            variant="contained"
-            color="primary"
-            type="button"
-            onClick={togleOpenDeleteModal}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            type="button"
-            onClick={() => handleDelete(id)}
-          >
-            Ok
-          </Button>
+          <DialogTitle id="alert-dialog-title">
+            {'You really want delete this ToDo?'}
+          </DialogTitle>
+          <DialogActions>
+            <Button
+              variant="contained"
+              color="primary"
+              type="button"
+              onClick={togleOpenDeleteModal}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              type="button"
+              onClick={() => handleDelete(id)}
+            >
+              Ok
+            </Button>
+          </DialogActions>
         </Dialog>
       </div>
     </Context.Provider>

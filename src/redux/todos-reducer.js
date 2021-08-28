@@ -22,7 +22,11 @@ const todos = createReducer([], {
   [editTodoSuccess]: (state, { payload }) =>
     state.map(item =>
       item.id === payload.id
-        ? { ...item, content: payload.content, title: payload.title }
+        ? {
+            ...item,
+            content: payload.content,
+            title: payload.title,
+            time: payload.time }
         : item,
     ),
 });

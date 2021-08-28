@@ -84,7 +84,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PrimaryAppBar = () => {
-  const { handleOpen, togleOpenDeleteModal, id } = useContext(Context);
+  const { handleOpen, togleOpenDeleteModal, id, toggleEditorOpen } =
+    useContext(Context);
   const dispatch = useDispatch();
   const value = useSelector(getFilter);
 
@@ -151,21 +152,20 @@ const PrimaryAppBar = () => {
         <p>Add</p>
       </MenuItem>
       {id ? (
-        <>
-          {' '}
-          <MenuItem>
+        <div>
+          <MenuItem onClick={togleOpenDeleteModal}>
             <IconButton aria-label="delete" color="inherit">
               <DeleteForeverIcon />
             </IconButton>
             <p>Delete</p>
           </MenuItem>
-          <MenuItem onClick={handleProfileMenuOpen}>
+          <MenuItem onClick={toggleEditorOpen}>
             <IconButton aria-label="adit" color="inherit">
               <EditIcon />
             </IconButton>
             <p>Edit</p>
           </MenuItem>
-        </>
+        </div>
       ) : null}
     </Menu>
   );
@@ -209,7 +209,11 @@ const PrimaryAppBar = () => {
                 >
                   <DeleteForeverIcon />
                 </IconButton>
-                <IconButton aria-label="adit" color="inherit">
+                <IconButton
+                  aria-label="adit"
+                  color="inherit"
+                  onClick={toggleEditorOpen}
+                >
                   <EditIcon />
                 </IconButton>
               </>

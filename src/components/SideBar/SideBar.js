@@ -9,6 +9,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Container from '@material-ui/core/Container';
 import { Dialog } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 
 import Context from '../../AppContext';
 import TodoForm from '../TodoForm/TodoForm';
@@ -45,12 +46,15 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
   },
   leftTodosBar: {
-    flexBasis: '30%',
+    width: '30%',
     overflow: 'hidden',
   },
   workspace: {
-    flexBasis: '70%',
+    // zIndex: 2,
+    display: 'block',
+    overflowX: 'auto',
     padding: theme.spacing(2, 2, 0),
+    width: '70%',
   },
   item: {
     overflow: 'hidden',
@@ -78,8 +82,8 @@ export default function SideBar() {
     dispatch(getItems());
   }, [dispatch]);
 
-  const postInfo = async (id, title, content, time) => {
-    getActiveTodo(title, content, time);
+  const postInfo = async (id, title, content) => {
+    getActiveTodo(title, content);
     saveId(id);
   };
 
@@ -108,16 +112,28 @@ export default function SideBar() {
                       <ListItem
                         className={classes.listItem}
                         button
-                        onClick={() => postInfo(id, title, content, time)}
+                        onClick={() => postInfo(id, title, content)}
                       >
                         <ListItemText
                           className={classes.item}
                           primary={title}
                           secondary={
-                            <div>
-                              <p> {content}</p>
-                              <p> {time}</p>
-                            </div>
+                            <React.Fragment>
+                              <Typography
+                                component="p"
+                                variant="body2"
+                                color="textPrimary"
+                              >
+                                {content}
+                              </Typography>
+                              <Typography
+                                component="p"
+                                variant="body2"
+                                color="textPrimary"
+                              >
+                                {time}
+                              </Typography>
+                            </React.Fragment>
                           }
                         />
                       </ListItem>

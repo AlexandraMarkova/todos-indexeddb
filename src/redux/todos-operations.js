@@ -1,5 +1,6 @@
 import { db } from '../db';
 import { format } from 'date-fns';
+import { v4 as uuidv4 } from 'uuid';
 import {
   fetchTodosRequest,
   fetchTodosSuccess,
@@ -29,7 +30,7 @@ export const getItems = () => async dispatch => {
 
 export const addPosts = (postTitle, postContent) => async dispatch => {
   const todo = {
-    id: postTitle,
+    id: uuidv4(),
     title: postTitle,
     content: postContent,
     time: format(new Date(), 'MM/dd/yyyy/hh:mm:ss'),
@@ -44,17 +45,23 @@ export const addPosts = (postTitle, postContent) => async dispatch => {
   }
 };
 
-export const editPosts = (title, content, id) => async dispatch => {
+export const editPosts = (id, title, content, time) => async dispatch => {
   dispatch(editTodoRequest());
   await db.posts.update(id, {
-    id,
     title,
     content,
-    time: new Date(),
+    time,
   });
 
   try {
-    dispatch(editTodoSuccess({ id, title, content }));
+    dispatch(
+      editTodoSuccess({
+        id,
+        title,
+        content,
+        time,
+      }),
+    );
   } catch (error) {
     console.log(error.message);
     dispatch(editTodoError(error.message));
